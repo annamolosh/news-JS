@@ -11,10 +11,7 @@ class AppController extends AppLoader {
         );
     }
 
-    public getNews(
-        e: MouseEvent,
-        callback: (data: NewsResponse) => void
-    ): void {
+    public getNews(e: MouseEvent, callback: (data: NewsResponse) => void): void {
         const target = e.target;
         const newsContainer = e.currentTarget;
 
@@ -27,10 +24,7 @@ class AppController extends AppLoader {
             if (currentElement.classList.contains('source__item')) {
                 const sourceId = currentElement.getAttribute('data-source-id');
 
-                if (
-                    sourceId &&
-                    newsContainer.getAttribute('data-source') !== sourceId
-                ) {
+                if (sourceId && newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
 
                     super.getResp(

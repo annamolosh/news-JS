@@ -12,7 +12,7 @@ class App {
 
     public start(): void {
         const sourcesElement = document.querySelector<HTMLElement>('.sources');
-        
+
         if (!sourcesElement) return;
 
         sourcesElement.addEventListener('click', (e: MouseEvent) => {

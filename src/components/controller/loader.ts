@@ -9,10 +9,12 @@ class Loader {
         this.options = options;
     }
 
-    public getResp<T>({ endpoint, options = {} }: { endpoint: string; options?: RequestOptions },
+    public getResp<T>(
+        { endpoint, options = {} }: { endpoint: string; options?: RequestOptions },
         callback: (data: T) => void = () => {
-        console.error('No callback for GET response');
-    }): void {
+            console.error('No callback for GET response');
+        }
+    ): void {
         this.load<T>('GET', endpoint, callback, options);
     }
 
@@ -27,7 +29,7 @@ class Loader {
     }
 
     public makeUrl(options: RequestOptions, endpoint: string): string {
-        const urlOptions = {...this.options, ...options};
+        const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
@@ -36,12 +38,17 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    public load<T>( method:HttpMethod, endpoint: string, callback: (data: T) => void, options: RequestOptions = {}) :void {
-        fetch(this.makeUrl(options, endpoint), {method})
-        .then(this.errorHandler)
-        .then((res) => res.json() as Promise<T>)
-        .then((data: T) => callback(data))
-        .catch((err: unknown) => console.error(err))
+    public load<T>(
+        method: HttpMethod,
+        endpoint: string,
+        callback: (data: T) => void,
+        options: RequestOptions = {}
+    ): void {
+        fetch(this.makeUrl(options, endpoint), { method })
+            .then(this.errorHandler)
+            .then((res) => res.json() as Promise<T>)
+            .then((data: T) => callback(data))
+            .catch((err: unknown) => console.error(err));
     }
 }
 

@@ -1,4 +1,3 @@
-
 import News from './news/news';
 import Sources from './sources/sources';
 import { Article, NewsSource, NewsResponse, SourcesResponse } from '../../types/news';

@@ -1,12 +1,9 @@
-
 import './news.css';
 import { Article } from '../../../types/news';
 
 class News {
     public draw(data: Article[]): void {
-        const news = data.length >= 10
-            ? data.filter((_item, idx) => idx < 10)
-            : data;
+        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = document.querySelector<HTMLTemplateElement>('#newsItemTemp');
@@ -32,11 +29,7 @@ class News {
 
             const date = newsClone.querySelector<HTMLElement>('.news__meta-date');
             if (date) {
-                date.textContent = item.publishedAt
-                    .slice(0, 10)
-                    .split('-')
-                    .reverse()
-                    .join('-');
+                date.textContent = item.publishedAt.slice(0, 10).split('-').reverse().join('-');
             }
 
             const title = newsClone.querySelector<HTMLElement>('.news__description-title');

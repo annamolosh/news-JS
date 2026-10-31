@@ -1,4 +1,3 @@
-
 import './sources.css';
 import { NewsSource } from '../../../types/news';
 
