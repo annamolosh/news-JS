@@ -53,3 +53,12 @@ header h1 {
     height: auto;
     display: block;
 }
+
+@media (max-width: 600px) {
+    .footer {
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+    }
+}
