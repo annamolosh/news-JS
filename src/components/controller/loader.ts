@@ -1,16 +1,16 @@
-import { HttpMethod, RequestOptions } from './types';
+import { HttpMethod, RequestOptions, RequestOptionsUpdate } from './types';
 
 class Loader {
-    public baseLink: string;
-    public options: RequestOptions;
+    public readonly baseLink: string;
+    public readonly options: Pick<RequestOptions, 'apiKey'>;
 
-    constructor(baseLink: string, options: RequestOptions) {
+    constructor(baseLink: string, options: Pick<RequestOptions, 'apiKey'>) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
     public getResp<T>(
-        { endpoint, options = {} }: { endpoint: string; options?: RequestOptions },
+        { endpoint, options = {} }: { endpoint: string; options?: RequestOptionsUpdate },
         callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
@@ -28,12 +28,15 @@ class Loader {
         return res;
     }
 
-    public makeUrl(options: RequestOptions, endpoint: string): string {
+    public makeUrl(options: RequestOptionsUpdate, endpoint: string): string {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
-        Object.keys(urlOptions).forEach((key) => {
-            url += `${key}=${urlOptions[key]}&`;
+        (Object.keys(urlOptions) as (keyof RequestOptions)[]).forEach((key) => {
+            const value = urlOptions[key];
+            if (value) {
+                url += `${key}=${value}&`;
+            }
         });
         return url.slice(0, -1);
     }
@@ -42,7 +45,7 @@ class Loader {
         method: HttpMethod,
         endpoint: string,
         callback: (data: T) => void,
-        options: RequestOptions = {}
+        options: RequestOptionsUpdate = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
